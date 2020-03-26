@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Y Studio</title>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <link href="/stylesheets/index.css" rel="stylesheet"/>
+</head>
+
+<body>
+
+  <div id="titleDiv">
+    <img src="/images/icon.png" style="width: 80px"><br>
+    <span id="titleSpan">Studio</span>
+  </div>
+  <div id="logDiv">
+    <table id="loginTable">
+      <tr>
+        <td colspan="2"><input class="logText" type="text" placeholder="ID" id="idText" name="userId" autocomplete="off"
+            onkeypress="enterkey();"></td>
+      </tr>
+      <tr>
+        <td colspan="2"><input class="logText" type="password" placeholder="PASSWORD" onkeypress="enterkey();"
+            id="passWordText" name="userPw"></td>
+      </tr>
+      <tr>
+        <td><input type="button" id="joinBtn" value="JOIN" onclick="location.href = '/joinPage'"></td>
+        <td><input type="button" id="findBtn" value="FIND ID/PW" onclick="location.href = '/idPwFind'"></td>
+      </tr>
+      <tr>
+
+      </tr>
+    </table>
+  </div>
+
+</body>
+<script>
+  // $(function () {
+  // })
+
+  function enterkey() {
+    if (window.event.keyCode == 13) {
+      login();
+    }
+  }
+
+  function login() {
+    let userId = $('#idText').val();
+    let userPw = $('#passWordText').val();
+
+    if ("" === userId) {
+      alert("아이디을 입력해 주세요.");
+    } else {
+      const param = {
+        userId: userId,
+        userPw: userPw
+      }
+      return $.ajax({
+        type: 'post',
+        url: "/login",
+        data: param,
+        dataType: 'json',
+        success: function (data) {
+          if (data.result === "success") {
+            location.href = data.url
+          } else {
+            alert(data.message)
+          }
+
+        },
+        error: function (res, ex) {
+          alert("로그인 에러")
+        }
+      });
+    }
+  }
+</script>
+
+</html>

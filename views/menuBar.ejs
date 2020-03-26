@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Y Studio</title>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <link href="/stylesheets/menuBar.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+
+  <div class='sideMenu'>
+    <a id="titleA1" href="/home"><img class="titleImg1" src="/images/title2.png"></a>
+    <a id="titleA2" href="/home"><img class="titleImg2" src="/images/title.png"></a>
+    <table class="menuTable">
+      <tr class="menuSub">
+        <td class="imgMenuSub" onclick="profile()"><img class="imgSub" src="/images/profile.png"></td>
+        <td class="textMenuSub" onclick="profile()">프로필</td>
+      </tr>
+      <tr class="menuSub">
+        <td class="imgMenuSub" onclick="profile()"> <img class="imgSub" src="/images/chat.png"></td>
+        <td class="textMenuSub" onclick="profile()">챗봇</td>
+      </tr>
+      <tr class="menuSub">
+        <td class="imgMenuSub" onclick="profile()"><img class="imgSub" src="/images/game.png"></td>
+        <td class="textMenuSub" onclick="profile()">게임</td>
+      </tr>
+
+    </table>
+
+    <img id="sideBtn" src="/images/open.png">
+
+  </div>
+</body>
+
+<script>
+  $(function () {
+    $(".titleImg1").css('opacity', '1');
+    $(".titleImg2").css('height', '0');
+    $(".titleImg2").css('opacity', '0');
+    $(".titleImg1").css('height', '40px');
+    $(".titleImg2").css('display', 'block');
+    $(".titleImg2").css('padding', '0');
+    $(".titleImg1").css('padding', '7px');
+    $(".titleA2").css('height', '0');
+    $(".textMenuSub").css('display', 'none');
+    $(".menuTable").css('width', '50px');
+
+  })
+  $("#sideBtn").click(
+    function () {
+      $('.sideMenu').toggleClass('activeSideMenu');
+      $(".titleSpan").toggleClass('activeTitleSpan');
+      $(".mainDiv").toggleClass('activeMainDiv');
+      $(".wid").toggleClass('acWid');
+      $('#sideBtn').toggleClass('rotate');
+      // $('#sideBtn').animate({
+      //   rotate: 360
+      // });
+
+      if ($('.sideMenu').attr("class") == "sideMenu") {
+        $(".titleImg1").css('opacity', '1');
+        $(".titleImg2").css('height', '0');
+        $(".titleImg2").css('opacity', '0');
+        $(".titleImg1").css('height', '40px');
+        $(".titleImg2").css('display', 'block');
+        $(".titleImg2").css('padding', '0');
+        $(".titleImg1").css('padding', '7px');
+        $(".titleA2").css('height', '0');
+        $(".textMenuSub").css('display', 'none');
+        // setTimeout(() => {
+        //     $(".textMenuSub").css('display', 'none');
+        // }, 100);
+
+        $(".menuTable").animate({
+          width: '60px'
+        });
+      } else if ($('.sideMenu').attr("class") == "sideMenu activeSideMenu") {
+        $(".titleImg2").css('opacity', '1');
+        $(".titleImg1").css('height', '0');
+        $(".titleImg1").css('opacity', '0');
+        $(".titleImg2").css('height', '40px');
+        $(".titleImg1").css('display', 'block');
+        $(".titleImg1").css('padding', '0');
+        $(".titleImg2").css('padding', '7px');
+        $(".titleA1").css('height', '0');
+        $(".textMenuSub").css('display', 'table-cell');
+        $(".textMenuSub").css('width', '100px');
+
+        $(".menuTable").animate({
+          width: '150px'
+        });
+
+
+      }
+    }
+  )
+</script>
+
+</html>

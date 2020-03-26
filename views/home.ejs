@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Y Studio</title>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <link href="/stylesheets/home.css" rel="stylesheet"/>
+
+</head>
+
+<body>
+  <div id="userDiv">
+    <a id="userNameA" href="/joinPage"><span id="userNameSpan"><%=session.user.name%>님</span></a>
+    <input id="logOutBtn" type="button" value="logout" onclick="location.href='/'">
+  </div>
+  <%- include ../views/menuBar.ejs %>
+
+  <div class="mainDiv">
+    http://ncov.mohw.go.kr/
+
+
+</body>
+<script>
+  $(function () {
+    scrollOff();
+  })
+
+  function scrollOff() {
+    $('body').addClass('scrollOff').on('scroll touchmove mousewheel', function (e) {
+      e.preventDefault();
+    });
+  }
+</script>
+
+</html>

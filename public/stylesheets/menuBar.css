@@ -1,0 +1,107 @@
+.sideMenu {
+  width: 60px;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  -webkit-transition: width 0.3s;
+  float: left;
+  background-color: #FFF;
+}
+
+.activeSideMenu {
+  width: 160px;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  -webkit-transition: width 0.3s;
+  float: left;
+}
+
+.menuTable {
+  margin: 0 auto 0 auto;
+  display: inline-block;
+  margin-top: 20px;
+  border-collapse: collapse;
+  padding: 0px 7px;
+}
+
+table.menuTable tr.menuSub td.textMenuSub {
+  text-decoration: none;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  color: black;
+}
+
+table.menuTable tr.menuSub td.textMenuSub:hover {
+  color: #00acac;
+  font-size: larger;
+}
+
+.imgSub:hover {
+  background-color: #00acac;
+  border-radius: 50px;
+}
+
+
+.activeMainDiv {
+  overflow: auto;
+  margin: 0 0 0 170px;
+  padding: 15px;
+  -webkit-transition: margin 0.5s;
+}
+
+.titleImg1 {
+  height: 40px;
+  opacity: 1;
+  display: block;
+  margin: 0 auto 0 auto;
+  padding: 7px;
+  -webkit-transition: opacity 2s;
+}
+
+.titleImg2 {
+  height: 40px;
+  opacity: 1;
+  display: block;
+  margin: 0 auto 0 auto;
+  padding: 7px;
+  -webkit-transition: opacity 2s;
+}
+
+#sideBtn {
+  width: 30px;
+  position: absolute;
+  bottom: 10px;
+  cursor: pointer;
+  left: calc(100% - 38px);
+}
+
+
+
+#sideBtn {
+  transition: transform 0.3s;
+}
+
+.imgSub {
+  width: 40px;
+  display: block;
+}
+
+
+
+.imgMenuSub {
+  display: inline-block;
+  cursor: pointer;
+}
+
+
+.rotate {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}

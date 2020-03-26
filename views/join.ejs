@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Y Studio</title>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <style>
+    #joinForm {
+      text-align: center;
+      margin: 0 auto 0 auto;
+    }
+
+    #joinTextForm {
+      text-align: center;
+      margin: 0 auto 0 auto;
+    }
+
+    body {
+      background-color: #d9e0e7;
+      margin: 0;
+    }
+
+    #joinSpan {
+
+    }
+
+    #joinImg {
+      
+    }
+  </style>
+</head>
+
+<body>
+
+  <img id="joinImg" src="/images/icon.png" style="width: 80px"><br>
+  <span id="joinSpan">Studio</span>
+  <div id="joinForm">
+    <% if(session.user){ %>
+    <h1><%=session.user.name %>님의 정보 수정</h1>
+
+    <table id="joinTextForm">
+      <tr>
+        <td>아이디 :</td>
+        <td id="reIdText"> <%=session.user.id%></td>
+
+      </tr>
+      <tr>
+        <td>비밀번호 : </td>
+        <td><input type="password" id="rePassWordText" name="rePassWordText" onkeypress="enterkeyRe();"></td>
+      </tr>
+      <tr>
+        <td>이름 : </td>
+        <td><input type="text" id="reNameText" name="reNameText" value="<%=session.user.name%>"
+            onkeypress="enterkeyRe();"></td>
+      </tr>
+      <tr>
+        <td>이메일 : </td>
+        <td><input type="email" id="reEmailText" name="reEmailText" value="<%=session.user.email%>"
+            onkeypress="enterkeyRe();"></td>
+      </tr>
+    </table>
+    <button type="button" id="reJoinBtn" onclick="reJoin()">정보 수정</button>
+    <button type="button" id="reJoinBtn" onclick="location.href = '/home'">취소</button>
+    <% }else{%>
+    <h1>회원가입</h1>
+
+    <table id="joinTextForm">
+      <tr>
+        <td>아이디 : </td>
+        <td><input type="text" name="idText" id="idText"></td>
+        <td><input type="button" id="CheckBtn" value="중복확인" onclick="idCheck()"></td>
+      </tr>
+      <tr>
+        <td>비밀번호 : </td>
+        <td><input type="password" id="passWordText" name="passWordText"></td>
+      </tr>
+      <tr>
+        <td>이름 : </td>
+        <td><input type="text" id="nameText" name="nameText"></td>
+      </tr>
+      <tr>
+        <td>이메일 : </td>
+        <td><input type="email" id="emailText" name="emailText" onkeypress="enterkey();"></td>
+      </tr>
+    </table>
+    <button type="button" id="joinBtn" disabled onclick="join()">회원가입</button>
+
+    <button type="button" onclick="location.href='/'">취소</button>
+    <% }%>
+
+  </div>
+</body>
+<script>
+  $("document").ready(function () {
+
+  })
+
+
+  function enterkeyRe() {
+    if (window.event.keyCode == 13) {
+      reJoin();
+    }
+  }
+
+  function enterkey() {
+    if (window.event.keyCode == 13) {
+      join();
+    }
+  }
+
+
+  function idCheck() {
+    let userId = $('#idText').val();
+
+    if ("" === userId) {
+      alert("아이디를 입력해 주세요.");
+    } else {
+      const param = {
+        userId: userId
+      }
+      return $.ajax({
+        type: 'post',
+        url: "/idCheck",
+        data: param,
+        dataType: 'json',
+        success: function (data) {
+          if (data.result == "success") {
+            alert("사용하고 있는 아이디입니다.")
+          } else if (data.result == "fail") {
+            alert("사용 가능한 아이디입니다.")
+
+            $("#idText").attr("readonly", true);
+            $("#CheckBtn").prop("disabled", true).css("background", "blue");
+            $("#joinBtn").prop("disabled", false);
+          }
+
+        },
+        error: function (res, ex) {
+          alert("아이디 조회를 실패하였습니다")
+        }
+      });
+    }
+  }
+
+
+  function chkEmail(str) {
+    var regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    if (regExp.test(str)) return false;
+    else return true;
+  }
+
+  function join() {
+
+    let userId = $('#idText').val();
+    let userPw = $('#passWordText').val();
+    let userName = $('#nameText').val();
+    let userEmail = $('#emailText').val();
+
+    if ("" === userPw || "" === userName || "" === userEmail) {
+      alert("모든 정보를 입력해 주세요.");
+    } else if (chkEmail(userEmail)) {
+      alert("이메일 형식을 정확히 입력해 주세요.")
+    } else {
+      const param = {
+        userId: userId,
+        userPw: userPw,
+        userName: userName,
+        userEmail: userEmail
+      }
+
+      return $.ajax({
+        type: 'post',
+        url: "/join",
+        data: param,
+        dataType: 'json',
+        success: function (data) {
+          if (data.result == 'success') {
+            alert("회원가입이 완료되었습니다.")
+            location.href = data.url
+          } else if (data.result == 'fail') {
+            alert("이미 가입한 아이디 입니다. 다시 회원 가입 해주세요")
+            location.href = data.url
+          }
+        },
+        error: function (res, ex) {
+          alert("회원가입을 실패하였습니다")
+        }
+      });
+    }
+  }
+
+
+  function reJoin() {
+    let userId = "";
+    let userPw = $('#rePassWordText').val();
+    let userName = $('#reNameText').val();
+    let userEmail = $('#reEmailText').val();
+
+    if ("" === userPw || "" === userName) {
+      alert("모든 정보를 입력해 주세요.");
+    } else {
+      const param = {
+        userId: userId,
+        userPw: userPw,
+        userName: userName,
+        userEmail: userEmail
+      }
+      return $.ajax({
+        type: 'post',
+        url: "/reJoin",
+        data: param,
+        dataType: 'json',
+        success: function (data) {
+          alert(data.message)
+          location.href = data.url
+        },
+        error: function (res, ex) {
+          alert("회원 정보 수정 에러")
+        }
+      });
+    }
+  }
+</script>
+
+</html>

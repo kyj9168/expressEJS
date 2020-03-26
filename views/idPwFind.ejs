@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Y Studio</title>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <style>
+    table {
+      margin: 0 auto 0 auto;
+    }
+
+    table td {
+      text-align: center;
+    }
+
+    table td input[type="button"] {
+      width: 120px;
+    }
+
+    table td input#loginBtn {
+      height: 60px;
+      width: 60px;
+    }
+
+    div {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <% if(session.user){ %>
+  <table>
+    <tr>
+      <td>변경할 비밀번호 : </td>
+      <td><input type="password" id="rePassText" onkeypress="enterkeyRePass();"></td>
+      <td><input type="button" value="변경" onclick="rePassword()"></td>
+    </tr>
+  </table>
+  <% }else{ %>
+  <div>
+    <h1>Id / Pw 찾기</h1>
+
+    <input type="button" value="Id" onclick="idFind()"> /
+    <input type="button" value="Pw" onclick="pwFind()">
+    <div id="findArea">
+      <button type="button" onclick="location.href='/'">취소</button>
+      <table id="idFindTable">
+        <tr>
+          <td colspan="2">id 찾기 입니다.</td>
+        </tr>
+        <tr>
+          <td>이름 : </td>
+          <td><input type="text" id="idNameText"></td>
+        </tr>
+        <tr>
+          <td>이메일 : </td>
+          <td><input type="email" id="idEmailText" onkeypress="enterkeyId();"></td>
+        </tr>
+        <tr>
+          <td colspan="2"><input type="button" value="id찾기" onclick="findIdFuc()"></td>
+        </tr>
+      </table>
+
+      <table id="pwFindTable">
+        <tr>
+          <td colspan="2">pw 찾기 입니다.</td>
+        </tr>
+        <tr>
+          <td>아이디 : </td>
+          <td><input type="text" id="pwIdText"></td>
+        </tr>
+        <tr>
+          <td>이메일 : </td>
+          <td><input type="email" id="pwEmailText" onkeypress="enterkeyPw();"></td>
+        </tr>
+        <tr>
+          <td colspan="2"><input type="button" value="pw찾기" onclick="findPwFuc()"></td>
+        </tr>
+      </table>
+
+    </div>
+
+  </div>
+  <% }%>
+</body>
+<script>
+  $(function () {
+    $("#pwFindTable").hide()
+    $("#idFindTable").hide()
+  })
+
+  function idFind() {
+    $("#pwFindTable").hide()
+    $("#idFindTable").show()
+  }
+
+  function pwFind() {
+    $("#pwFindTable").show()
+    $("#idFindTable").hide()
+  }
+
+  function findPwFuc() {
+    let userId = $("#pwIdText").val()
+    let userEmail = $("#pwEmailText").val()
+
+    if ("" === userId || "" === userEmail) {
+      alert("모든 정보를 입력해 주세요.");
+    } else {
+      const param = {
+        userId: userId,
+        userEmail: userEmail
+      }
+      return $.ajax({
+        type: 'post',
+        url: "/findPw",
+        data: param,
+        dataType: 'json',
+        success: function (data) {
+          if (data.result === "success") {
+            alert(data.message)
+            location.reload();
+          } else {
+            alert(data.message)
+          }
+        },
+        error: function (res, ex) {
+          y
+          alert("비밀번호 찾기 에러")
+        }
+      });
+    }
+  }
+
+  function rePassword() {
+    let pass = $("#rePassText").val()
+    let user = "<%= session.user %>"
+    const param = {
+      pass: pass,
+      user: user
+    }
+    return $.ajax({
+      type: 'post',
+      url: "/rePassword",
+      data: param,
+      dataType: 'json',
+      success: function (data) {
+        alert(data.message)
+          location.href = data.url
+
+      },
+      error: function (res, ex) {
+        alert("비밀번호 정보 수정 에러")
+      }
+    });
+  }
+
+  function findIdFuc() {
+    let userName = $("#idNameText").val()
+    let userEmail = $("#idEmailText").val()
+
+    if ("" === userName || "" === userEmail) {
+      alert("모든 정보를 입력해 주세요.");
+    } else {
+      const param = {
+        userName: userName,
+        userEmail: userEmail
+      }
+      return $.ajax({
+        type: 'post',
+        url: "/findId",
+        data: param,
+        dataType: 'json',
+        success: function (data) {
+          if (data.result === "success") {
+            alert(data.message)
+            location.href = data.url
+          } else {
+            alert(data.message)
+          }
+
+        },
+        error: function (res, ex) {
+          alert("아이디 찾기 에러")
+        }
+      });
+    }
+  }
+
+  function enterkeyId() {
+    if (window.event.keyCode == 13) {
+      findIdFuc();
+    }
+  }
+
+  function enterkeyPw() {
+    if (window.event.keyCode == 13) {
+      findPwFuc();
+    }
+  }
+
+  function enterkeyRePass() {
+    if (window.event.keyCode == 13) {
+      rePassword();
+    }
+  }
+</script>
+
+</html>

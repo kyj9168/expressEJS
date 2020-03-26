@@ -1,0 +1,64 @@
+
+body {
+  background-color: #d9e0e7;
+  margin: 0;
+}
+
+#loginTable {
+  margin: 0 auto 0 auto;
+}
+
+#loginTable td {
+  width: 200px;
+  padding: 5px;
+  text-align: center;
+}
+
+#loginTable td input[type="button"] {
+  border: none;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  background: #00acac;
+  color: #fff;
+  cursor: pointer;
+
+}
+
+#loginTable td input[type="button"]:hover {
+  background: #006d6d;
+}
+
+
+#logDiv {
+  text-align: center;
+  margin-top: 50px;
+  background-color: #2d353c;
+  padding: 100px 100px 100px 100px;
+}
+
+input::placeholder {
+  color: rgb(180, 180, 180);
+  font-style: italic;
+}
+
+#loginTable td input.logText {
+  border: none;
+  width: 90%;
+  height: 20px;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+}
+
+#titleDiv {
+  width: 35%;
+  text-align: center;
+  margin: 80px auto 0 auto;
+  color: #00acac;
+}
+
+#titleSpan {
+  font-size: 40px;
+}

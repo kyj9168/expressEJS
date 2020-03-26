@@ -1,0 +1,74 @@
+body {
+  background-color: #d9e0e7;
+  margin: 0;
+  overflow: hidden;
+}
+
+#userDiv {
+  background-color: white;
+  text-align: right;
+  padding: 15px;
+  float: right;
+  width: 100%;
+}
+
+
+
+
+a#userNameA {
+  text-decoration: none;
+}
+
+#userNameSpan {
+  color: #949494;
+}
+
+#userNameSpan:hover {
+  text-decoration: underline;
+}
+
+#logOutBtn {
+  border: none;
+  height: 100%;
+  margin: auto 0 auto 0;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+}
+
+#logOutBtn:hover {
+  color: #00acac;
+}
+
+#leftMenu {
+  background-color: violet;
+  float: left;
+  position: relative;
+  height: calc(93vh - 0px);
+  width: 200px;
+  float: left;
+  background-color: #00acac;
+  z-index: 10;
+
+
+}
+
+#mainMenu {
+  list-style: none;
+  border: 1px solid blue;
+}
+
+.subMenu {
+  list-style: none;
+  padding: 0;
+  border: 1px solid red;
+}
+
+
+
+.mainDiv {
+  overflow: auto;
+  margin: 0 0 0 60px;
+  padding: 15px;
+  -webkit-transition: margin 0.5s;
+}
